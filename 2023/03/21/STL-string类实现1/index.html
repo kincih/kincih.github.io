@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://kincih.github.io">
-  <title>Hexo</title>
+  <title>STL string类实现1 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://kincih.github.io/index.html">
+  <meta name="description" content="目录0.初始化成员变量1.构造函数2.拷贝构造函数3.赋值重载4.下标操作符重载5.输出重载6.析构函数7.swap 0.初始化成员变量在string里面需要有一个char指针来存储string的地址，两个整形变量存储最大可存储字符数和当前已存储字符数，用size_t类型是提高代码的可移植性。 1234567class string &amp;#123;	private:		char* _str;		si">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL string类实现1">
+<meta property="og:url" content="https://kincih.github.io/2023/03/21/STL-string%E7%B1%BB%E5%AE%9E%E7%8E%B01/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录0.初始化成员变量1.构造函数2.拷贝构造函数3.赋值重载4.下标操作符重载5.输出重载6.析构函数7.swap 0.初始化成员变量在string里面需要有一个char指针来存储string的地址，两个整形变量存储最大可存储字符数和当前已存储字符数，用size_t类型是提高代码的可移植性。 1234567class string &amp;#123;	private:		char* _str;		si">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-21T15:16:16.526Z">
+<meta property="article:modified_time" content="2023-03-21T16:06:32.270Z">
 <meta property="article:author" content="kincih">
 <meta name="twitter:card" content="summary">
   
@@ -211,25 +211,25 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-STL-string类实现1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-STL-string类实现1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/03/21/STL-string%E7%B1%BB%E5%AE%9E%E7%8E%B01/" target="_blank">STL string类实现1</a>
-  
+    <h1 class="article-title" itemprop="name">
+      STL string类实现1
     </h1>
   
 
 
   
   
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2023/03/21/STL-string%E7%B1%BB%E5%AE%9E%E7%8E%B01/" class="archive-article-date">
         <time datetime="2023-03-21T15:16:16.526Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-21</time>
 </a>
@@ -237,6 +237,27 @@
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">733字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">3分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
@@ -271,6 +292,26 @@
     
 
     
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          kincih
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://kincih.github.io/2023/03/21/STL-string类实现1/" title="STL string类实现1" target="_blank">https://kincih.github.io/2023/03/21/STL-string类实现1/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
 
   </div>
   <div class="article-info article-info-index">
@@ -279,16 +320,76 @@
     
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/03/21/STL-string%E7%B1%BB%E5%AE%9E%E7%8E%B01/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://kincih.github.io/2023/03/21/STL-string%E7%B1%BB%E5%AE%9E%E7%8E%B01/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/03/20/%E4%B8%80%E7%BB%B4%E5%92%8C%E4%BA%8C%E7%BB%B4%E5%AE%B9%E5%99%A8%E7%9A%84%E6%9F%A5%E6%89%BE%E5%B0%8F%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一维和二维容器的查找小结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -309,258 +410,14 @@
 
 
 
-  
-    <article id="post-一维和二维容器的查找小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/03/20/%E4%B8%80%E7%BB%B4%E5%92%8C%E4%BA%8C%E7%BB%B4%E5%AE%B9%E5%99%A8%E7%9A%84%E6%9F%A5%E6%89%BE%E5%B0%8F%E7%BB%93/" target="_blank">一维和二维容器的查找小结</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/03/20/%E4%B8%80%E7%BB%B4%E5%92%8C%E4%BA%8C%E7%BB%B4%E5%AE%B9%E5%99%A8%E7%9A%84%E6%9F%A5%E6%89%BE%E5%B0%8F%E7%BB%93/" class="archive-article-date">
-        <time datetime="2023-03-20T15:00:05.690Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>今天在leetcode上刷了两道查找题，感觉其中可优化的点还挺多的。</p>
-<h2 id="一维数组查找"><a href="#一维数组查找" class="headerlink" title="一维数组查找"></a>一维数组查找</h2><h3 id="0-n-1中缺失的数字"><a href="#0-n-1中缺失的数字" class="headerlink" title="0~n-1中缺失的数字"></a>0~n-1中缺失的数字</h3><p>题目：一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。</p>
-<p>分析：做这道题的时候我首先想到的是像快排那样二分查找，不过仅需要照顾一端的就好了，关键在于理清find递归的区间，时间复杂度为O(nlogn)。运行速度12ms，超过了86.18%的c++用户.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int find(vector&lt;int&gt;&amp; nums,int l,int r)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(l==r+1)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> l;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(nums[(l+r)/2]==(l+r)/2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> find(nums,(l+r)/2+1,r);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">return</span> find(nums,l,(l+r)/2-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其实如果用数学方法直接累加会更方便，哈希表也行，但运行速度没二分查找快，这两个都要遍历整个数组。</p>
-<h2 id="二维数组查找"><a href="#二维数组查找" class="headerlink" title="二维数组查找"></a>二维数组查找</h2><h3 id="二维数组的查找"><a href="#二维数组的查找" class="headerlink" title="二维数组的查找"></a>二维数组的查找</h3><p>题目：在一个 n * m 的二维数组中，每一行都按照从左到右 非递减 的顺序排序，每一列都按照从上到下 非递减 的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<p>分析：这个二维数组的规律是每个元素的左上都是不大于它的，右下都是不小于它的。最开始我是想仿照一维那样用二分递归，发现两个递归式的前后后导致查找的方向有偏向，使得左下角或右上角最后再查找到。最后我想到以前做迷宫题的时候的方法，用队列存储查找的下一个节点，这样就能从左上角开始同时照顾左右地往右下角探查。但最终的运行时间仅超过了5.27%的用户。代码较长就不放出污染眼睛了。<br>最后查找题解，发现Z型查找的速度是比较快的，它的思路是像二叉搜索树那样把右上角的元素作为根节点，左孩子是不大于它的，右孩子是不小于它的，一直找到最后，本质上还是二分查找。时间复杂度是O(nlogn)。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bool findNumberIn2DArray(vector&lt;vector&lt;int&gt;&gt;&amp; matrix, int target) &#123;</span><br><span class="line">    <span class="keyword">if</span>(matrix.size()==0) <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    int root_i = 0;</span><br><span class="line">    int root_j = matrix[0].size()-1;</span><br><span class="line">    bool tag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(root_i&lt;matrix.size()&amp;&amp;root_j&gt;=0)&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix[root_i][root_j]&gt;target) root_j--;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(matrix[root_i][root_j]&lt;target) root_i++;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            tag=<span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> tag;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p><font color="#000066">今天刷的题这两道是给我印象较深的，其中一个原因是它们的数组都是用容器二维基础数据类型，一维的还好，二维容器我还没怎么见过，今天算是练了练手，两道查找题的思想都是利用二分，虽然方法不太一样  </font><br /> </p>
-<p>date: 2023-03-20 23:00:05<br>tags:</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/03/20/%E4%B8%80%E7%BB%B4%E5%92%8C%E4%BA%8C%E7%BB%B4%E5%AE%B9%E5%99%A8%E7%9A%84%E6%9F%A5%E6%89%BE%E5%B0%8F%E7%BB%93/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-    <article id="post-Hello-World-Hello-Hexo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/03/19/Hello-World-Hello-Hexo/" target="_blank">第一个博客（发牢骚）</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/03/19/Hello-World-Hello-Hexo/" class="archive-article-date">
-        <time datetime="2023-03-19T06:55:18.670Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>历尽_ _ _ _，把博客给搭好了，选了个简介的主题，原本想选live my life的，但git clone卡死，反倒其他的都下载的很快。</p>
-<p>目前还没怎么写过博客，第一次在jupyter上编辑markdown文件。<br> <a target="_blank" rel="noopener" href="https://www.webfx.com/tools/emoji-cheat-sheet">emoji表情带师</a></p>
-<h2 id="安排"><a href="#安排" class="headerlink" title="安排"></a>安排</h2><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><p> 最近忙着学Java，发现java的数据类型的表达那些东西。。。和c&#x2F;c++差不多，跳着看挺快的。快点把这基础学完去找项目做噜。</p>
-<h3 id="数寄库"><a href="#数寄库" class="headerlink" title="数寄库"></a>数寄库</h3><p> 此外还要复习其他知识，昨天看了一些数据库的题发现自己就只记得怎么Select了（悲），以前我还对我的mysql熟练程度十分自信的:sob:，找个时间补一补…<br>date: 2023-03-19 17:23:18</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/03/19/Hello-World-Hello-Hexo/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/03/19/hello-world/" target="_blank">Hello World</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/03/19/hello-world/" class="archive-article-date">
-        <time datetime="2023-03-18T16:35:50.450Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/03/19/hello-world/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -600,8 +457,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
