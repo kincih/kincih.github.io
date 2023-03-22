@@ -18,7 +18,7 @@
 <meta property="og:description" content="目录0.初始化成员变量1.构造函数2.拷贝构造函数3.赋值重载4.下标操作符重载5.输出重载6.析构函数7.swap 0.初始化成员变量在string里面需要有一个char指针来存储string的地址，两个整形变量存储最大可存储字符数和当前已存储字符数，用size_t类型是提高代码的可移植性。 1234567class string &amp;#123;	private:		char* _str;		si">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-21T15:16:16.526Z">
-<meta property="article:modified_time" content="2023-03-21T16:06:32.270Z">
+<meta property="article:modified_time" content="2023-03-21T16:07:41.226Z">
 <meta property="article:author" content="kincih">
 <meta name="twitter:card" content="summary">
   
@@ -244,7 +244,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">733字</span>
+      <span class="post-count">743字</span>
     </span>
   </span>
 
@@ -285,7 +285,7 @@
 <h3 id="6-析构函数"><a href="#6-析构函数" class="headerlink" title="6.析构函数"></a>6.析构函数</h3><p>释放_str的对象空间，同时把_str赋值nullptr，防止其变成野指针。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~<span class="function"><span class="title">string</span></span>() &#123;</span><br><span class="line">			delete[] _str;</span><br><span class="line">			_str = nullptr;</span><br><span class="line">			_size = _capacity = 0;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="7-swap"><a href="#7-swap" class="headerlink" title="7.swap"></a>7.swap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void swap(string&amp; s)</span><br><span class="line">		&#123;</span><br><span class="line">			std::swap(_str, s._str);//请注意_str是否有非空值</span><br><span class="line">			std::swap(_size, s._size);</span><br><span class="line">			std::swap(_capacity, s._capacity);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
-<p>要断网了先写到这，明天再写</p>
+<p>要断网了先写到这，明天再写，还有swap和页内跳转没弄</p>
 <h2 id="date-2023-03-21-23-16-16tags"><a href="#date-2023-03-21-23-16-16tags" class="headerlink" title="date: 2023-03-21 23:16:16tags:"></a>date: 2023-03-21 23:16:16<br>tags:</h2>
     
 
