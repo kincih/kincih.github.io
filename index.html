@@ -214,6 +214,96 @@
             
 
   
+    <article id="post-STL-源码剖析-笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/03/22/STL-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E7%AC%94%E8%AE%B0/" target="_blank">STL string源码剖析 空间配置器Allocate</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/03/22/STL-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+        <time datetime="2023-03-22T06:12:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-22</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="template回顾"><a href="#template回顾" class="headerlink" title="template回顾"></a>template回顾</h2><p>1.在类模板的实例化过程中，并不是所有成员函数在一开始就实例化了，而是在用的时候才实例化。否则容易产生很多冗余代码，这种特性叫做“延迟实例化”。<br>2.在使用非类型参数时，可以在编译时自动计算出参数的大小</p>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>1.new和malloc<br>在我刚开始学习面向对象的时候是只学了new，所以有时候我看到malloc会感到疑惑为什么不用new来分配内存，所以先来说一下它们的区别。<br>1.1 new是c++的一个关键字而malloc是一个c语言函数。<br>1.2 new在分配内存失败时会抛出异常，成功后还会对内存进行初始化；而malloc内存分配失败时仅返回NULL指针，且成功分配内存后不会对其初始化。这也说明了要十分注意malloc的使用，很容易因为一些细节程序崩溃。<br>1.3 malloc分配的内存大小是以字节数为单位，而new是以对象的大小为单位。</p>
+<p>小结：从以上特点可以看出，在面向对象编程时new更适合用来分配内存。</p>
+<p>2.new operator<br>常用的一种分配内存的方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">template&lt;class T&gt;</span><br><span class="line">class one</span><br><span class="line">&#123;</span><br><span class="line">     public:T x;</span><br><span class="line">&#125;</span><br><span class="line">one&lt;int&gt; *p = new one&lt;int&gt;[5];</span><br></pre></td></tr></table></figure>
+<p>C++用了两个步骤用new实现了内存分配。<br>2.1 先向堆申请一块大小的内存<br>2.2 对其有构造函数的执行构造函数</p>
+<p>2.1 operator new<br>operator new就是只申请一块大小空间，然后什么也不做，像malloc那样。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void* __CRTDECL operator new(size_t const size)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (;;)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (void* const block = malloc(size))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">return</span> block;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (_callnewh(size) == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (size == SIZE_MAX)</span><br><span class="line">            &#123;</span><br><span class="line">                __scrt_throw_std_bad_array_new_length();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                __scrt_throw_std_bad_alloc();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.2 placement new<br>placement new则是在已经申请的内存上构建对象</p>
+<h2 id="空间配置器"><a href="#空间配置器" class="headerlink" title="空间配置器"></a>空间配置器</h2><h3 id="Allocator"><a href="#Allocator" class="headerlink" title="Allocator"></a>Allocator</h3><p>std::Allocator是C++的默认分配器，其包含了allocate()deallocate()分别用于分配和释放内存的方法以及construct()和destroy()分别用于构造和销毁对象的方法。当我们自定义一个分配器时必须实现这四个成员函数。<br>其中destroy()有两个版本，这里给出第二个版本的代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 第二个版本的, 接受两个迭代器, 并设法找出元素的类型. 通过__type_trais&lt;&gt; 找出最佳措施</span><br><span class="line">template &lt;class ForwardIterator&gt;</span><br><span class="line">inline void destroy(ForwardIterator first, ForwardIterator last) </span><br><span class="line">&#123;</span><br><span class="line">  __destroy(first, last, value_type(first));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 接受两个迭代器, 以__type_trais&lt;&gt; 判断是否有traival destructor </span><br><span class="line">template &lt;class ForwardIterator, class T&gt;</span><br><span class="line">inline void __destroy(ForwardIterator first, ForwardIterator last, T*) </span><br><span class="line">&#123;</span><br><span class="line">  typedef typename __type_traits&lt;T&gt;::has_trivial_destructor trivial_destructor;</span><br><span class="line">  __destroy_aux(first, last, trivial_destructor());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重点在于_destroy()，其中的__type_traits是用来获取迭代器所指对象的类型，根据类型的不同选择不一样的析构调用。<br>如当该类型的析构函数是平凡的，那么会返回__true_type，即true真值，此时__destroy_aux()将什么都不做，因为这样会高效一点。当返回false时，调用__destroy_aux()的重载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 没有non-travial destructor </span><br><span class="line">template &lt;class ForwardIterator&gt;</span><br><span class="line">inline void __destroy_aux(ForwardIterator first, ForwardIterator last, __false_type) </span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span> ( ; first &lt; last; ++first)</span><br><span class="line">    destroy(&amp;*first);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样做的目的是为了在范围析构的情况下节省时间和提高效率。</p>
+<h2 id="一级配置器"><a href="#一级配置器" class="headerlink" title="一级配置器"></a>一级配置器</h2><h2 id="观后感"><a href="#观后感" class="headerlink" title="观后感"></a>观后感</h2><p>今天效率不是很高，先写到这吧，有时间回来补</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/03/22/STL-%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90-%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-STL-string类实现1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
